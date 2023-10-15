@@ -6,15 +6,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Template</title>
         <cfoutput>
-            <link href="#GetDirectoryFromPath(CGI.SCRIPT_NAME)#/assets/css/ostyles.css" rel="stylesheet" />
+            <link href="/#ListFirst(CGI.SCRIPT_NAME, "/")#/assets/css/ostyles.css" rel="stylesheet" />
         </cfoutput>
     </head>
     <body class="h-[100dvh] w-[100dvw] bg-white flex flex-col justify-between">
+        <!--- header --->
         <cfinclude template="../components/navbar.cfm">
         
         <!--- Content from nested layouts or pages will go here --->
-        <cfinclude template="../#attributes.contentTemplate#">
+        <cfoutput>#includes.contentBlock#</cfoutput>
         
+        <!--- footer --->
         <cfinclude template="../components/footer.cfm">
     </body>
 </html>
