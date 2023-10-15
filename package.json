@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-      "bsync": "browser-sync start --proxy \"localhost:8500\" --files \"*.cfm, *.cfml, *.cfc\" --no-notify --no-open",
+      "bsync": "browser-sync start --proxy \"localhost:8500\" --files \"**/*.cfm, **/*.cfml, **/*.cfc\" --no-notify --no-open",
       "twbuild-watch": "postcss assets/css/tailwind.css -o assets/css/ostyles.css --watch",
       "reload-on-css": "chokidar 'assets/css/ostyles.css' -c 'browser-sync reload'",
       "dev": "npm-run-all -p bsync twbuild-watch reload-on-css"

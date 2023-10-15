@@ -2,17 +2,8 @@
    
 </cfscript>
 
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Template</title>
-        <cfoutput>
-            <link href="#GetDirectoryFromPath(CGI.SCRIPT_NAME)#/assets/css/ostyles.css" rel="stylesheet" />
-        </cfoutput>
-    </head>
-    <body class="h-[100dvh] w-[100dvw] bg-white">
-        <h1>tesdsdt</h1>
-    </body>
-</html>
+
+<cfset attributes.contentTemplate = "./views/landingPage.cfm">
+<cfinclude template="layouts/baseLayout.cfm" >
+
+
