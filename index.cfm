@@ -1,3 +1,4 @@
+//Landing Page Content
 <cfsavecontent variable="includes.contentBlock" >
     <section class="h-[80dvh] flex p-4">
     <div class="flex flex-col gap-2 w-full text-3xl">
@@ -7,6 +8,7 @@
     </section> 
 </cfsavecontent>
 
+//Call template
 <cfinclude template="layouts/baseLayout.cfm" >
 
 

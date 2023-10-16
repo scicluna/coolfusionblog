@@ -1,3 +1,4 @@
+//Main Layout
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Template</title>
         <cfoutput>
+            <!--- Dynmamically linked css file --->
             <link href="/#ListFirst(CGI.SCRIPT_NAME, "/")#/assets/css/ostyles.css" rel="stylesheet" />
         </cfoutput>
     </head>
