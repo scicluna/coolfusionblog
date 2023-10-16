@@ -1,35 +1,14 @@
 component{
-    property User author;
-    property string postId;
-    property string content;
+    property name="author" type="User" getter="true" setter="true";
+    property name="postId" type="string" getter="true" setter="true";
+    property name="content" type="string" getter="true" setter="true";
 
-    public function init(User author, string postId, string content){
-        setUser(author);
-        setPostId(postId);
-        setContent(content);
-    }
-    
-    function setUser(User newAuthor){
-        author = newAuthor;
-    }
+    public function init(struct args){
+        if (!structKeyExists(args,"content")){
+            throw(type="InvalidArgument", message="Content is required");
+        }
 
-    function setPostId(string newPostId){
-        postId = newPostId;
-    }
-
-    function setContent(string newContent){
-        content = newContent;
-    }
-
-    function getUser(){
-        return author;
-    }
-
-    function getPostId(){
-        return postId;
-    }
-
-    function getContent(){
-        return content;
+        structAppend(variables,args)
+        return this;
     }
 }

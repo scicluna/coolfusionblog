@@ -1,48 +1,19 @@
 component {
-    property User author;
-    property string title;
-    property string content;
-    property string category;
+    property name="author" type="User" getter="true" setter="true";
+    property name="title" type="string" getter="true" setter="true";
+    property name="content" type="string" getter="true" setter="true";
+    property name="category" type="string" getter="true" setter="true"; 
 
-    public function init(User author, string title, string content, string category){
-        setAuthor(author);
-        setTitle(title);
-        setContent(content);
-        setCategory(category);
+    public function init(struct args){
+        if (!structKeyExists(args, "title") OR Trim(args.title) == "") {
+            throw(type="InvalidArgument", message="Title is required");
+        }
+
+        if (!structKeyExists(args, "content") OR Trim(args.content) == "") {
+            throw(type="InvalidArgument", message="Content is required");
+        }
+
+        structAppend(variables, args);
         return this;
     }
-    
-	function setCategory (string newCategory){
-        category = newCategory;
-	}
-
-	function setContent (string newContent){
-        content = newContent;
-	}
-
-	function setTitle (string newTitle){
-        title = newTitle;
-	}
-
-	function setAuthor (User newAuthor){
-        author = newAuthor;
-	}
-
-    function getCategory(){
-        return category;
-    }
-
-    function getContent(){
-        return content;
-    }
-
-    function getTitle(){
-        return title;
-    }
-
-    function getAuthor(){
-        return author;
-    }
-
-
 }
