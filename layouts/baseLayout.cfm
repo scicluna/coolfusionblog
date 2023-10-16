@@ -1,4 +1,4 @@
-//Main Layout
+<!--- Main Template --->
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,14 +11,20 @@
             <link href="/#ListFirst(CGI.SCRIPT_NAME, "/")#/assets/css/ostyles.css" rel="stylesheet" />
         </cfoutput>
     </head>
-    <body class="h-[100dvh] w-[100dvw] bg-white flex flex-col justify-between">
+    <body class="min-h-[100dvh] bg-slate-200 flex flex-col justify-between">
         <!--- header --->
-        <cfinclude template="../components/navbar.cfm">
+        <nav class="w-full">
+            <cfinclude template="../components/navbar.cfm">
+        </nav>
         
         <!--- Content from nested layouts or pages will go here --->
-        <cfoutput>#includes.contentBlock#</cfoutput>
-        
+        <section class="h-[90dvh] w-full">
+            <cfoutput>#includes.contentBlock#</cfoutput>
+        </section>
+
         <!--- footer --->
-        <cfinclude template="../components/footer.cfm">
+        <footer class="w-full">
+            <cfinclude template="../components/footer.cfm">
+        </footer>
     </body>
 </html>

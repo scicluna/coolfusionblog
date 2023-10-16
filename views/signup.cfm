@@ -1,6 +1,6 @@
 <!--- Kind of like a react server component --->
 <cfsavecontent variable="includes.contentBlock" >
-    <h1>About !!!!</h1>
+    <h1>signup form</h1>
 </cfsavecontent>
 
 <!--- actually call the template --->

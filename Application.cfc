@@ -1,4 +1,3 @@
-//App settings
 <cfcomponent>
     <cfset THIS.Name = "YourAppName">
     <cfset THIS.ApplicationTimeout = CreateTimeSpan(0,1,0,0)>
