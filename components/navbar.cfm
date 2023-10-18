@@ -2,7 +2,7 @@
     <a href="/cfcblog2" class="text-5xl text-white font-extrabold hover:text-slate-400 transition-all duration-500">Coolest Blog Ever</a>
     
     <!--- If structure --->
-    <cfif structKeyExists(session,"User")>
+    <cfif structKeyExists(session,"user")>
         <a href="/cfcblog2/views/logout.cfm" class="text-white hover:text-slate-400 transition-all duration-500 text-2xl">Logout</a>
     <cfelse>
         <a href="/cfcblog2/views/login.cfm" class="text-white hover:text-slate-400 transition-all duration-500 text-2xl">Login</a>

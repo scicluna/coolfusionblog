@@ -2,13 +2,9 @@ component {
     property name="user" type="User" getter="true" setter="true";
     property name="loggedIn" type="boolean" getter="true" setter="false" default="false";
 
-    public function init(User newUser){
-        setUser(newUser);
+    public function init(newUser){
+        this.user = newUser;
         return this
-    }
-
-    public function setUser(User newUser){
-        user = newUser;
     }
 
     public function login(){
@@ -21,19 +17,26 @@ component {
                     users
                 WHERE (
                     username = :username
-                    AND password = :password
                 )
                 ",
                 {
-                    username: user.getUsername(),
-                    password: user.getHashedPassword()
+                    username: this.user.username
                 },
                 {datasource: 'blog2'}
             )
-            session.user = user;
-            loggedIn = true;
-            return true
+            if (fetchedUser.recordCount gt 0){
+                salt = fetchedUser.salt;
+                hashedPassword = hash(this.user.password & salt, "SHA-256")
+                if (hashedPassword eq fetchedUser.password){
+                    session.user = this.user;
+                    loggedIn = true;
+                    return true;
+                } else {
+                    return false;
+                }
+            } 
         } catch (Any e){
+            writeDump(e)
             return false;
         }
     }
@@ -57,7 +60,7 @@ component {
             username = :username
             ",
             {
-                username: user.getUsername()
+                username: this.user.username
             },
             {
                 datasource: 'blog2'
@@ -67,24 +70,28 @@ component {
             return false;
         } else {
             try {
-                newUser = queryExecute(
+                salt = createUUID();
+                hashedPassword = hash(this.user.password & salt, "SHA-256")
+                registerUser = queryExecute(
                     "
                     INSERT INTO
-                    users (username, password)
-                    VALUES (:username, :password)
+                    users (username, password, created_at, salt)
+                    VALUES (:username, :password, now(), :salt)
                     ",
                     {
-                        username: user.getUsername(),
-                        password: user.getHashedPassword()
+                        username: this.user.username,
+                        password: hashedPassword,
+                        salt: salt
                     },
                     {
                         datasource: 'blog2'
                     }
                 )
-                session.user = user;
+                session.user = this.user;
                 loggedIn = true;
                 return true;
             } catch(Any e){
+                writeDump(e)
                 return false;
             }
         }

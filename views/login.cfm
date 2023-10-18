@@ -1,7 +1,7 @@
 <cfscript>
     if(structKeyExists( form, "username" ) AND structKeyExists(form,"password") AND CGI.REQUEST_METHOD EQ "POST"  ){
-        newUser = new cfcblog2.models.User({username = form.user, password = form.password});
-        AuthService = new cfcblog2.controllers.AuthController({user = newUser});
+        newUser = new cfcblog2.models.User({username = form.username, password = form.password});
+        AuthService = new cfcblog2.controllers.AuthController(newUser);
         if(AuthService.login()) {
             location(url="/cfcblog2");
         } else {
@@ -23,8 +23,9 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
         <br>
-        <input type="submit" value="Login">
+        <button type="submit">Submit</button>
     </form>
+    <a href="/cfcblog2/views/signup.cfm">Signup</a>
 </cfsavecontent>
 
 <!--- actually call the template --->
