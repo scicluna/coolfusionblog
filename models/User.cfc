@@ -18,15 +18,20 @@ component {
     }
     
     public function getUserId(){
-        userId = queryExecute(
+        user = queryExecute(
             "
             SELECT id
             FROM users
-            WHERE username = :username   
+            WHERE username = :username
             ",
             {username: this.username},
             {datasource: 'blog2'}
         );
-        return userId;
+
+        if (user.recordCount gt 0) {
+            return user.id[1];
+        } else {
+            return 0;
+        }
     }
 }

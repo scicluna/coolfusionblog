@@ -1,18 +1,44 @@
 component {
-    public function getPosts(){
-        posts = queryExecute(
+    public function getPosts(numeric currentPage, numeric PAGINATION){
+        offset = (currentPage - 1) * PAGINATION;
+        
+        try{
+            posts = queryExecute(
+                "
+                SELECT 
+                * 
+                FROM 
+                posts
+                ORDER BY created_at DESC
+                LIMIT :offset, :PAGINATION 
+                
+                ",
+                {
+                    PAGINATION: { value=PAGINATION, cfsqltype="cf_sql_integer" },
+                    offset: { value=offset, cfsqltype="cf_sql_integer" }
+                },
+                {datasource: "blog2"}
+            )
+            return posts;
+        } catch(Any e){
+            writeDump(e)
+        }
+    }
+
+    public function getTotalPages(numeric recordsPerPage = 10) {
+        totalRecords = queryExecute(
             "
-            SELECT 
-            * 
+            SELECT COUNT(*) 
+            AS 
+            count 
             FROM 
-            posts
-            ORDER BY
-            date DESC;
+            posts;
             ",
             {},
             {datasource: "blog2"}
-        )
-        return posts;
+        ).count;
+
+        return ceiling(totalRecords / recordsPerPage);
     }
 
     public function getPostById(string id){
@@ -32,24 +58,22 @@ component {
     }
 
     public function createPost(Post post){
-        try{
-            queryExecute(
-                "
-                INSERT INTO
-                posts (title, content, created_at, userid)
-                VALUES (:title, :content, now(), :userid)
-                ",
-                {
-                    title: post.getTitle(),
-                    content: post.getContent(),
-                    userid: post.author.getUserId()
-                },
-                {datasource: "blog2"}
-            )
-            return true;
-        } catch(Any e) {
-            throw(message="Error creating post");
-        }
+        writeDump(post.author.getUserId())
+        postToCreate = queryExecute(
+            "
+            INSERT INTO
+            posts (category, title, content, created_at, user_id)
+            VALUES (:category, :title, :content, now(), :user_id)
+            ",
+            {
+                category: post.category,
+                title: post.title,
+                content: post.content,
+                user_id: post.author.getUserId()
+            },
+            {datasource: "blog2"}
+        )
+        return true;
     }
 
     public function editPostById(string postId, Post post){
@@ -101,12 +125,12 @@ component {
             queryExecute(
                 "
                 INSERT INTO
-                comments (content, created_at, userid, postid)
-                VALUES (:content, now(), :userid, :postid)
+                comments (content, created_at, user_id, postid)
+                VALUES (:content, now(), :user_id, :postid)
                 ",
                 {
                     content: comment.getContent(),
-                    userid: comment.author.getUserId(),
+                    user_id: comment.author.getUserId(),
                     postid: postId
                 },
                 {datasource: "blog2"}

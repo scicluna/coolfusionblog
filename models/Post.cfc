@@ -13,7 +13,8 @@ component {
             throw(type="InvalidArgument", message="Content is required");
         }
 
-        structAppend(variables, args);
+        structAppend(this, args);
+
         return this;
     }
 }

@@ -1,6 +1,5 @@
 component {
     property name="user" type="User" getter="true" setter="true";
-    property name="loggedIn" type="boolean" getter="true" setter="false" default="false";
 
     public function init(newUser){
         this.user = newUser;
@@ -29,7 +28,7 @@ component {
                 hashedPassword = hash(this.user.password & salt, "SHA-256")
                 if (hashedPassword eq fetchedUser.password){
                     session.user = this.user;
-                    loggedIn = true;
+                    session.loggedIn = true;
                     return true;
                 } else {
                     return false;
@@ -43,10 +42,11 @@ component {
 
     public function logout(){
         structDelete(session,"user")
+        structDelete(session,"loggedIn")
     }
 
     public function isLoggedIn(){
-        return loggedIn
+        return session.loggedIn
     }
 
     public function register(){
@@ -88,7 +88,7 @@ component {
                     }
                 )
                 session.user = this.user;
-                loggedIn = true;
+                session.loggedIn = true;
                 return true;
             } catch(Any e){
                 writeDump(e)
