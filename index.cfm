@@ -15,12 +15,18 @@
                 <cfoutput >
                     <div class="grid grid-rows-2 grid-cols-2">
                         <cfloop query="posts">
-                            <div class="flex flex-col gap-2 p-8 h-[40dvh] items-center break-words overflow-auto">
-                                <div class="flex justify-start w-full">
+                            <div class="flex flex-col gap-2 p-8 h-[40dvh] items-center break-words relative">
+                                <div class="flex justify-start items-center w-full font-extrabold text-4xl gap-6">
                                     <h1>#posts.title#</h1>
+                                    <cfif structKeyExists(session,"user") AND #posts.user_id# EQ session.user.getUserId()>
+                                        <a href="/cfcblog2/views/editpost.cfm?postid=#posts.id#&origin=/cfcblog2/index.cfm" class="text-2xl font-bold text-blue-500 hover:text-blue-700">edit</a>
+                                        <a href="/cfcblog2/views/deletepost.cfm?postid=#posts.id#&origin=/cfcblog2/index.cfm" class="text-2xl font-bold text-blue-500 hover:text-blue-700">delete</a>
+                                    </cfif>
                                 </div>
-                                <p class="w-full">#posts.created_at#</p>
-                                <p class="w-full">#posts.content#</p>
+                                <p class="w-full text-xs">#posts.created_at#</p>
+                                <div class="w-full h-full overflow-auto">
+                                    <p class="w-full">#posts.content#</p>
+                                </div>
                             </div>
                         </cfloop>
                     </div>      
@@ -28,6 +34,7 @@
             <cfelse>
                 <p>No Posts Yet...</p>
             </cfif> 
+            <a href="/cfcblog2/views/allposts.cfm" class="absolute bottom-0 right-0 p-4">All posts</a>
         </div>
     </section> 
 </cfsavecontent>

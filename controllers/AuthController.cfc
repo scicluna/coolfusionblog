@@ -96,4 +96,27 @@ component {
             }
         }
     }
+
+    public function authPost(postId){
+        checkPost = queryExecute(
+            "
+            SELECT
+            id
+            FROM
+            posts
+            WHERE
+            id = :id
+            AND
+            user_id = :user_id
+            ",
+            {
+                id: postId,
+                user_id: session.user.getUserId()
+            },
+            {
+                datasource: 'blog2'
+            }
+        )
+        return checkPost.recordCount gt 0;
+    }
 }

@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './**/*.cfm',
+    './**/*.cfc',
     './**/*.cfm',
     './**/*.cfml',
     './**/**/*.css'

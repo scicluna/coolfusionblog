@@ -41,7 +41,7 @@ component {
         return ceiling(totalRecords / recordsPerPage);
     }
 
-    public function getPostById(string id){
+    public function getPostById(numeric id){
             post = queryExecute(
                 "
                 SELECT
@@ -51,7 +51,7 @@ component {
                 WHERE
                 id = :id
                 ",
-                {id: id},
+                {id: { value=id, cfsqltype="cf_sql_integer" }},
                 {datasource: "blog2"}
             )
             return post;
@@ -90,15 +90,15 @@ component {
                 id = :id
                 ",
                 {
-                    title: post.getTitle(),
-                    content: post.getContent(),
+                    title: post.title,
+                    content: post.content,
                     id: postId
                 },
                 {datasource: "blog2"}  
             )
             return true;
         } catch(Any e){
-            throw(message="Error editing post");
+            writeDump(e);
         }
     }
 
